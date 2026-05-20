@@ -16,7 +16,7 @@ Workspace icinde V2.3 olarak uc yuzeyli site vardir: trust-first landing page (`
 landing page + oneri studyosu + erken erisim yonlendirme yuzeyi mantiginda kalir. Ana kaynaklar:
 
 - babie+ dosyaları/32-MI5.pdf
-- babie+ dosyaları/babie+\_basvuru_formu.pdf
+- babie+ dosyaları/babie+_basvuru_formu.pdf
 - docs/ altindaki bu dokuman paketi
 
 Aktif teknik yapi:
@@ -99,7 +99,7 @@ Babie+ icin frontend gelistirme yapacak kisi veya AI once su kaynaklari okumali:
 7. docs/05_HOMEPAGE_COPY_TR.md
 8. docs/18_DOC_UPDATE_PROTOCOL_TR.md
 9. babie+ dosyaları/32-MI5.pdf
-10. babie+ dosyaları/babie+\_basvuru_formu.pdf
+10. babie+ dosyaları/babie+_basvuru_formu.pdf
 
 ## 3. Temel Calisma Ilkesi
 
