@@ -59,7 +59,7 @@ GitHub Pages repo alt yolu simulasyonu gerekiyorsa ayni komutlar `BABIE_SITE_BAS
 Eldeki ana kaynaklar su dosyalardir:
 
 - babie+ dosyaları/32-MI5.pdf
-- babie+ dosyaları/babie+_basvuru_formu.pdf
+- babie+ dosyaları/babie+\_basvuru_formu.pdf
 
 Bu iki belgeye gore babie+:
 
@@ -128,28 +128,28 @@ Brand entegrasyon notu:
 ## Aktif Dokumanlar
 
 - 01_SITE_FOUNDATION_TR.md
-Site neden var, kime hitap eder, neyi donusturmeli, hangi sayfalar gerekir.
+  Site neden var, kime hitap eder, neyi donusturmeli, hangi sayfalar gerekir.
 
 - 02_WIREFRAMES_TR.md
-Ana sayfa, oneri studyosu ve erken erisim yuzeylerinin dusuk sadakat yerlesim plani.
+  Ana sayfa, oneri studyosu ve erken erisim yuzeylerinin dusuk sadakat yerlesim plani.
 
 - 05_HOMEPAGE_COPY_TR.md
-Ana sayfada kullanilabilecek ilk metin omurgasi.
+  Ana sayfada kullanilabilecek ilk metin omurgasi.
 
 - 14_TRUTH_AUDIT_TR.md
-Public copy yazarken hangi iddialarin guvenli oldugu.
+  Public copy yazarken hangi iddialarin guvenli oldugu.
 
 - 15_VISUAL_DIRECTION_LOCK_TR.md
-Babie+ icin secilen gorsel yon ve reddedilecek gorunumler.
+  Babie+ icin secilen gorsel yon ve reddedilecek gorunumler.
 
 - 17_AI_FRONTEND_BUILD_PLAYBOOK_TR.md
-Bu repoda siteyi gelistirecek AI veya gelistirici icin calisma rehberi.
+  Bu repoda siteyi gelistirecek AI veya gelistirici icin calisma rehberi.
 
 - 19_SITEYI_CALISTIRMA_TR.md
-Siteyi build edip yerel sunucuda acmak icin hizli calistirma rehberi.
+  Siteyi build edip yerel sunucuda acmak icin hizli calistirma rehberi.
 
 - 18_DOC_UPDATE_PROTOCOL_TR.md
-Her kod degisikliginden sonra hangi markdown dosyalarinin zorunlu olarak gozden gecirilecegini tanimlayan protokol.
+  Her kod degisikliginden sonra hangi markdown dosyalarinin zorunlu olarak gozden gecirilecegini tanimlayan protokol.
 
 ## Temel Kurallar
 

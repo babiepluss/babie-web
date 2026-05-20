@@ -117,9 +117,10 @@ GitHub tarafinda yapilacaklar:
 3. `Build and deployment -> Source` alaninda `GitHub Actions` secin.
 4. `Actions` sekmesinde `Deploy GitHub Pages` workflow'unun ilk calismasini bekleyin.
 5. Run basarili olduktan sonra Pages URL'sini acip su rotalari kontrol edin:
-  - ana sayfa
-  - `/oneri/`
-  - `/erken-erisim/`
+
+- ana sayfa
+- `/oneri/`
+- `/erken-erisim/`
 
 Workflow repo adina gore base path'i otomatik belirler:
 
