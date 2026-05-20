@@ -59,7 +59,7 @@ GitHub Pages repo alt yolu simulasyonu gerekiyorsa ayni komutlar `BABIE_SITE_BAS
 Eldeki ana kaynaklar su dosyalardir:
 
 - babie+ dosyaları/32-MI5.pdf
-- babie+ dosyaları/babie+_basvuru_formu.pdf
+- babie+ dosyaları/babie+\_basvuru_formu.pdf
 
 Bu iki belgeye gore babie+:
 
