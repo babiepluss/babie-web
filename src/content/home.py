@@ -325,17 +325,17 @@ RECOMMENDATION = {
         "items": [
             {
                 "label": "Planları karşılaştır",
-                "href": "/erken-erisim/",
+                "href": "@route:early_access",
                 "kind": "primary",
             },
             {
                 "label": "Bu mantığın nasıl çalıştığını gör",
-                "href": "/#nasil-calisir",
+                "href": "@route:home#nasil-calisir",
                 "kind": "secondary",
             },
             {
                 "label": "Babie+ ana sayfa",
-                "href": "/",
+                "href": "@route:home",
                 "kind": "ghost",
             },
         ],
@@ -487,22 +487,22 @@ EARLY_ACCESS = {
         "items": [
             {
                 "label": "Öneri stüdyosuna dön",
-                "href": "/oneri/",
+                "href": "@route:recommendation",
                 "kind": "primary",
             },
             {
                 "label": "Bu mantığın nasıl çalıştığını gör",
-                "href": "/#nasil-calisir",
+                "href": "@route:home#nasil-calisir",
                 "kind": "secondary",
             },
             {
                 "label": "Sık sorulan sorular",
-                "href": "/#sss",
+                "href": "@route:home#sss",
                 "kind": "secondary",
             },
             {
                 "label": "Babie+ ana sayfa",
-                "href": "/",
+                "href": "@route:home",
                 "kind": "ghost",
             },
         ],

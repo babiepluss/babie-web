@@ -34,6 +34,7 @@ Aktif teknik yapi:
 - check.py
 - scripts/build.py
 - scripts/check.py
+- .github/workflows/pages.yml
 - dist/index.html
 - dist/oneri/index.html
 - dist/erken-erisim/index.html
@@ -55,12 +56,21 @@ V2.4 sertlestirme notlari (early access final surface):
 - Featured kart gorunumu ortadaki karta sabitlenmez; secili tier hangisiyse koyu Sky Deep yuzeyi o kart alir.
 - Truth-safe yasak liste genisletildi: "ai analiz ediyor", "ai takip ediyor", "premium'u yükselt", "premium'u seçin", "aboneliginiz basladi", "teslimat tarihi", "kargoya verildi", "ilk kutunuz hazirlaniyor" vb.
 - scripts/check.py artik uc sayfayi ayri ayri dogrular: home/no-studio guard, recommendation phase machine guard'lari (intro start, 4 phase, transition aria-live, result tabindex+aria-live, edit+restart, step-1 back-to-intro, primary CTA -> /erken-erisim/), early access surface guard'i (3 tier card, server-render default selection, focus-label slotlari, dynamic selected badge, snapshot preselect/featured JS guard, context fallback, tek CTA-button secim modeli, no-form, no-submit-button, marketplace dili yok), no-JS nav guard, sticky-cta mobile guard, snapshot restart guard, markdown geneli PDF yol taramasi ve truth-safe copy guard.
+- scripts/build.py ve scripts/check.py artik `BABIE_SITE_BASE_PATH` ile calisabilir; boylece repo ana alaninda (`/`) ve GitHub Pages proje alt yolunda (`/repo-adi/`) ayni kaynaklardan dogru linkler uretilir ve dogrulanir.
+- Build sonunda `dist/.nojekyll` de uretilir; `.github/workflows/pages.yml` Python build + check + Pages deploy artifact akisini tanimlar.
 
 Yerel komutlar:
 
 ```bash
 .venv/bin/python build.py
 .venv/bin/python check.py
+```
+
+GitHub Pages proje yolu simulasyonu gerekiyorsa:
+
+```bash
+BABIE_SITE_BASE_PATH=/babie-web/ .venv/bin/python build.py
+BABIE_SITE_BASE_PATH=/babie-web/ .venv/bin/python check.py
 ```
 
 Siteyi tarayicida yerel olarak acmak icin docs/19_SITEYI_CALISTIRMA_TR.md izlenebilir.
@@ -191,10 +201,12 @@ Bu repo icin yapilmamasi gerekenler:
 6. Erken erisim sayfasinda (`/erken-erisim/`) form, input veya submit-capable buton kurma; sayfa karsilastirma kartlari ana deneyimi tasimali, alttaki not kisa kalmali, fiyat/odeme/abonelik dili icermemelidir.
 7. Mobil nav ve reveal davranislarini progressive enhancement mantiginda tut; studyoda no-JS fallback olarak intro/transition/result fazlari gizlenir, questions fazi tamamen stack edilmis fieldset'ler olarak kalsin.
 8. Build ve check komutlarini calistir; uc page (`dist/index.html`, `dist/oneri/index.html`, `dist/erken-erisim/index.html`) uretiminin gectigini gor.
-9. Check ciktisinda home/no-studio guard, recommendation phase guard'lari, early-access tier guard, no-JS nav, sticky-cta mobile, PDF yolu ve truth-safe copy guard'larinin gectigini dogrula.
-10. Brand degisikligi varsa favicon, touch icon, manifest ve header/footer lockup secimlerinin zemin kontrastiyla uyumlu oldugunu kontrol et.
-11. Truth audit ile public copy taramasi yap.
-12. Sonra ilave bir yuzey gerekiyorsa ayni multi-page disiplinle ekle.
+9. GitHub Pages hedefleniyorsa ayni build/check akisini bir kez `BABIE_SITE_BASE_PATH=/repo-adi/` ile de calistir; subpage CTA ve home anchor linklerinin repo alt yoluna dondugunu gor.
+10. Check ciktisinda home/no-studio guard, recommendation phase guard'lari, early-access tier guard, no-JS nav, sticky-cta mobile, PDF yolu ve truth-safe copy guard'larinin gectigini dogrula.
+11. Brand degisikligi varsa favicon, touch icon, manifest ve header/footer lockup secimlerinin zemin kontrastiyla uyumlu oldugunu kontrol et.
+12. Truth audit ile public copy taramasi yap.
+13. Deploy gerekiyorsa `.github/workflows/pages.yml` uzerinden GitHub Actions run'inin basarili oldugunu kontrol et.
+14. Sonra ilave bir yuzey gerekiyorsa ayni multi-page disiplinle ekle.
 
 ## 9. Dogrulama Checklist'i
 

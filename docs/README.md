@@ -42,8 +42,9 @@ Ana teknik yapi:
 - src/static/site.webmanifest: favicon ve app icon bildirim dosyasi
 - src/static/app.js: mobil nav, reveal davranisi, studyo step machine ve plan karsilastirma yuzeyi
 - build.py / check.py: repo kokunden calisan kisa wrapper komutlari
-- scripts/build.py: dist/index.html, dist/oneri/index.html, dist/erken-erisim/index.html ve assets ciktisini uretir (multi-page)
-- scripts/check.py: home page guard, recommendation studio guard, plan comparison/no-JS fallback guard, dynamic featured card guard, snapshot restart guard, landmark, nav aria, no-JS nav, sticky-cta mobile guard, markdown geneli PDF yolu ve truth-safe copy guard kontrolu yapar
+- scripts/build.py: dist/index.html, dist/oneri/index.html, dist/erken-erisim/index.html ve assets ciktisini uretir; `BABIE_SITE_BASE_PATH` ile repo alt yolu uyumlu linkler ve `.nojekyll` dosyasi da olusturur
+- scripts/check.py: home page guard, recommendation studio guard, plan comparison/no-JS fallback guard, dynamic featured card guard, snapshot restart guard, landmark, nav aria, no-JS nav, sticky-cta mobile guard, markdown geneli PDF yolu ve truth-safe copy guard kontrolu yapar; `BABIE_SITE_BASE_PATH` ile base-path senaryosunu da dogrular
+- .github/workflows/pages.yml: Python build + check + Pages artifact upload + deploy akisini calistirir
 - dist/: build sonrasi uretilen statik cikti
 
 Yerel build:
@@ -52,6 +53,8 @@ Yerel build:
 .venv/bin/python build.py
 .venv/bin/python check.py
 ```
+
+GitHub Pages repo alt yolu simulasyonu gerekiyorsa ayni komutlar `BABIE_SITE_BASE_PATH=/babie-web/` ile de calistirilabilir. Workflow bunu GitHub Actions icinde repo adina gore otomatik ayarlar.
 
 Eldeki ana kaynaklar su dosyalardir:
 
@@ -99,6 +102,8 @@ V2.5 polish notu (plan comparison final surface):
 - Studyoda no-JS fallback gercek calisir: intro/transition/result fazlari gizlenir, questions fazi tamamen stack edilmis fieldset'ler olarak gorunur ve dogrudan kullanilabilir.
 - Reduced-motion durumunda transition fazi kisalir, reveal animasyonlari ve kart hover efektleri nötrlenir.
 - Truth-safe dil korunur: "AI sizin icin karar verdi", "akilli motor", "doktor onayli", "aboneliginiz basladi", "teslimat tarihi", "premium'u yükselt" gibi cumleler kullanilmaz.
+- Build artik kok domaine sabit degildir; repo Pages adresi gibi alt yollarda calismasi icin `BABIE_SITE_BASE_PATH` uzerinden ic linkleri ve CTA'lari uretir.
+- `dist/.nojekyll` dosyasi build ile birlikte uretilir ve `.github/workflows/pages.yml` GitHub Pages deploy artifact'ini olusturur.
 
 Brand entegrasyon notu:
 

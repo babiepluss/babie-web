@@ -4,6 +4,8 @@ Bu repo bir framework dev server'i ile degil, statik build akisi ile calisir.
 
 Siteyi yerelde gormek icin once `dist/` ciktisini uretir, sonra bu klasoru kucuk bir lokal HTTP sunucusu ile servis edersiniz.
 
+Build script'i istege bagli olarak `BABIE_SITE_BASE_PATH` ortam degiskenini okuyabilir. Bu degisken GitHub Pages repo alt yolu gibi (`/babie-web/`) yayin senaryolarini yerelde simule etmek icindir.
+
 ## 1. Gerekenler
 
 - Python 3
@@ -40,6 +42,7 @@ Build sonrasi beklenen ana cikti:
 - `dist/erken-erisim/index.html`
 - `dist/assets/styles.css`
 - `dist/assets/app.js`
+- `dist/.nojekyll`
 
 ## 4. Kontrolleri Calistir
 
@@ -48,6 +51,15 @@ Bu komut build ciktisini, temel HTML yapisini ve markdown yol kontrollerini dogr
 ```bash
 .venv/bin/python check.py
 ```
+
+GitHub Pages proje yolu simulasyonu yapmak isterseniz:
+
+```bash
+BABIE_SITE_BASE_PATH=/babie-web/ .venv/bin/python build.py
+BABIE_SITE_BASE_PATH=/babie-web/ .venv/bin/python check.py
+```
+
+Bu ikinci akis, home page icindeki birincil CTA'larin `/babie-web/oneri/` ve subpage home anchor linklerinin `/babie-web/#...` olarak uretildigini dogrulamak icindir.
 
 ## 5. Siteyi Tarayicida Ac
 
@@ -93,3 +105,23 @@ Bu komutta son adim sunucu actigi icin terminal mesgul kalir; durdurana kadar sa
 ```
 
 Bu durumda tarayicida `http://localhost:8001` adresini acin.
+
+## 8. GitHub Pages'e Yayin
+
+Repo artik `.github/workflows/pages.yml` ile GitHub Actions uzerinden deploy edilmeye hazirdir.
+
+GitHub tarafinda yapilacaklar:
+
+1. Bu branch'i GitHub'a push edin.
+2. Repo icinde `Settings -> Pages` ekranini acin.
+3. `Build and deployment -> Source` alaninda `GitHub Actions` secin.
+4. `Actions` sekmesinde `Deploy GitHub Pages` workflow'unun ilk calismasini bekleyin.
+5. Run basarili olduktan sonra Pages URL'sini acip su rotalari kontrol edin:
+  - ana sayfa
+  - `/oneri/`
+  - `/erken-erisim/`
+
+Workflow repo adina gore base path'i otomatik belirler:
+
+- repo adi `kullanici.github.io` ise site kokte (`/`) deploy edilir
+- diger repo adlarinda site `/<repo-adi>/` altinda deploy edilir

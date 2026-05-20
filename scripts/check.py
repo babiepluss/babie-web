@@ -1,3 +1,4 @@
+import os
 from html.parser import HTMLParser
 from pathlib import Path
 import re
@@ -8,12 +9,32 @@ sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
 
+
+def normalize_base_path(raw_base_path: str | None) -> str:
+    if raw_base_path is None:
+        return "/"
+
+    base_path = raw_base_path.strip()
+    if not base_path or base_path == "/":
+        return "/"
+    if "://" in base_path:
+        fail("BABIE_SITE_BASE_PATH must be a path, not a full URL")
+
+    return "/" + base_path.strip("/") + "/"
+
+
+SITE_BASE_PATH = normalize_base_path(os.getenv("BABIE_SITE_BASE_PATH"))
+HOME_PATH = SITE_BASE_PATH
+RECOMMENDATION_PATH = f"{SITE_BASE_PATH}oneri/"
+EARLY_ACCESS_PATH = f"{SITE_BASE_PATH}erken-erisim/"
+
 REQUIRED_FILES = [
     DIST / "index.html",
     DIST / "oneri" / "index.html",
     DIST / "erken-erisim" / "index.html",
     DIST / "assets" / "styles.css",
     DIST / "assets" / "app.js",
+    DIST / ".nojekyll",
 ]
 
 REQUIRED_HOME_IDS = {
@@ -62,10 +83,6 @@ FORBIDDEN_COPY = [
     "stoklarla sınırlı",
     "tüm türkiye'de aktif",
 ]
-
-RECOMMENDATION_PATH = "/oneri/"
-EARLY_ACCESS_PATH = "/erken-erisim/"
-
 
 class AuditParser(HTMLParser):
     def __init__(self) -> None:
@@ -163,7 +180,7 @@ def assert_home_page(html: str) -> None:
     if "data-studio-result" in html:
         fail("home page must not embed the studio result panel")
 
-    # Header CTA, hero primary CTA and sticky CTA should target /oneri/.
+    # Header CTA, hero primary CTA and sticky CTA should target the recommendation page.
     sticky = [a for a in parser.anchors if "sticky-cta" in (a.get("class") or "")]
     if not sticky:
         fail("home page must keep the sticky CTA hook")
@@ -182,7 +199,7 @@ def assert_home_page(html: str) -> None:
             f"{RECOMMENDATION_PATH} (got {header_cta[0].get('href')})"
         )
 
-    # Hero primary CTA points to /oneri/.
+    # Hero primary CTA points to the recommendation page.
     hero_primary = next(
         (
             a
@@ -372,7 +389,7 @@ def assert_recommendation_page(html: str) -> None:
     header_cta = [a for a in parser.anchors if "header-cta" in (a.get("class") or "")]
     if not header_cta:
         fail("recommendation page must keep a header CTA (e.g. back to home)")
-    if header_cta[0].get("href") in (RECOMMENDATION_PATH, "#oneri", "/oneri", "/oneri/"):
+    if header_cta[0].get("href") == RECOMMENDATION_PATH:
         fail("recommendation page header CTA must not link to itself")
 
 
@@ -496,7 +513,7 @@ def assert_early_access_page(html: str) -> None:
     header_cta = [a for a in parser.anchors if "header-cta" in (a.get("class") or "")]
     if not header_cta:
         fail("plan comparison page must keep a header CTA")
-    if header_cta[0].get("href") in (EARLY_ACCESS_PATH, "/erken-erisim", "#erken-erisim"):
+    if header_cta[0].get("href") == EARLY_ACCESS_PATH:
         fail("plan comparison page header CTA must not link to itself")
 
     # Truth-safe / marketplace local guard for this surface.
