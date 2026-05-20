@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ meta.title }}</title>
+    <meta name="description" content="{{ meta.description }}">
+    <meta name="theme-color" content="#fbe8dd">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Babie+">
+    <meta property="og:title" content="{{ meta.title }}">
+    <meta property="og:description" content="{{ meta.description }}">
+    <meta property="og:image" content="{{ asset_prefix }}/brand/babie-plus-tile-on-light.jpg">
+    <meta property="og:image:alt" content="Babie+ logosu">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ meta.title }}">
+    <meta name="twitter:description" content="{{ meta.description }}">
+    <meta name="twitter:image" content="{{ asset_prefix }}/brand/babie-plus-tile-on-light.jpg">
+    <meta name="twitter:image:alt" content="Babie+ logosu">
+    <meta name="apple-mobile-web-app-title" content="Babie+">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=IBM+Plex+Sans:wght@500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="manifest" href="{{ asset_prefix }}/site.webmanifest">
+    <link rel="icon" href="{{ asset_prefix }}/brand/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset_prefix }}/brand/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset_prefix }}/brand/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset_prefix }}/brand/apple-touch-icon.png">
+    <link rel="stylesheet" href="{{ asset_prefix }}/styles.css">
+  </head>
+  <body{% if current_page %} data-page="{{ current_page }}"{% endif %}>
+    <a class="skip-link" href="#main">İçeriğe geç</a>
+    {% set brand_home_href = "#hero" if current_page == "home" else home_path %}
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand brand--header" href="{{ brand_home_href }}" aria-label="Babie+ ana sayfa">
+          <img
+            class="brand-logo"
+            src="{{ asset_prefix }}/brand/babie-plus-lockup-on-light.png"
+            alt=""
+            width="223"
+            height="320"
+            decoding="async"
+          >
+        </a>
+        <nav class="site-nav" id="site-nav" aria-label="Ana navigasyon">
+          {% for item in nav %}
+          <a href="{{ item.href }}">{{ item.label }}</a>
+          {% endfor %}
+        </nav>
+        {% if current_page == "home" %}
+        <a class="button button-small header-cta" href="{{ recommendation_path }}">Kişiselleştirilmiş öneriyi gör</a>
+        {% else %}
+        <a class="button button-small header-cta header-cta--ghost" href="{{ home_path }}">Ana sayfaya dön</a>
+        {% endif %}
+        <button class="nav-toggle" type="button" aria-label="Menüyü aç" aria-controls="site-nav" aria-expanded="false" data-nav-toggle hidden>
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <a class="brand footer-brand brand--footer" href="{{ brand_home_href }}" aria-label="Babie+ ana sayfa">
+            <img
+              class="brand-logo"
+              src="{{ asset_prefix }}/brand/babie-plus-lockup-on-dark.png"
+              alt=""
+              width="222"
+              height="320"
+              decoding="async"
+            >
+          </a>
+          <p>0-24 aylık bebekleri olan ebeveynler için daha sakin bir ihtiyaç yönetimi deneyimi.</p>
+        </div>
+        <div class="footer-links" aria-label="Alt bağlantılar">
+          {% for item in nav %}
+          <a href="{{ item.href }}">{{ item.label }}</a>
+          {% endfor %}
+        </div>
+        <p class="footer-note">
+          Erken aşama web yüzeyi. Bu sayfa hazır bir işlem veya kullanım taahhüdü içermez.
+        </p>
+      </div>
+    </footer>
+
+    {% if current_page == "home" %}
+    <a class="sticky-cta" href="{{ recommendation_path }}">Kişiselleştirilmiş öneriyi gör</a>
+    {% endif %}
+    <script src="{{ asset_prefix }}/app.js" defer></script>
+  </body>
+</html>

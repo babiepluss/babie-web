@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% set default_detail = details[default_plan] %}
+<section
+  class="section access-section"
+  aria-labelledby="access-heading"
+  data-access
+  data-default-plan="{{ default_plan }}"
+>
+  <div class="container access-shell reveal">
+
+    <header class="access-intro">
+      <span class="section-label">{{ intro.section_label }}</span>
+      <h1 class="access-heading" id="access-heading">{{ intro.title }}</h1>
+      <p class="access-lede">{{ intro.body }}</p>
+      <p class="access-transparency">{{ intro.transparency_note }}</p>
+    </header>
+
+    <!-- Studio context ribbon: hydrated from sessionStorage when available. -->
+    <aside
+      class="access-context"
+      data-access-context
+      aria-label="Stüdyo özeti"
+      hidden
+    >
+      <div class="access-context-body">
+        <span class="access-context-eyebrow" data-access-context-eyebrow>{{ intro.context_with_snapshot_label }}</span>
+        <strong class="access-context-name" data-access-context-name>{{ intro.context_with_snapshot_label }}</strong>
+        <p class="access-context-summary" data-access-context-summary>{{ intro.context_default }}</p>
+      </div>
+      <p class="access-context-fit" data-access-context-fit>{{ intro.context_recommended_label }}</p>
+    </aside>
+    <p class="access-context-default" data-access-context-default>{{ intro.context_default }}</p>
+
+    <div class="access-cards" role="list" aria-label="Babie+ planları">
+      {% for plan in plans %}
+      <article
+        class="access-card{% if plan.key == default_plan %} is-selected{% endif %}"
+        role="listitem"
+        data-access-card
+        data-plan="{{ plan.key }}"
+      >
+        <header class="access-card-head">
+          {% if plan.badge %}
+          <span class="access-card-badge">{{ plan.badge }}</span>
+          {% endif %}
+          <span class="access-card-selected" data-access-selected-badge {% if plan.key != default_plan %}hidden{% endif %}>
+            {{ controls.selected_label }}
+          </span>
+          <span class="access-card-recommended" data-access-recommended hidden>
+            {{ controls.recommended_label }}
+          </span>
+        </header>
+
+        <h2 class="access-card-name">{{ plan.name }}</h2>
+        <p class="access-card-price" data-access-price>
+          <span class="access-card-price-main">{{ plan.price }}</span>{% if plan.price_suffix %}<span class="access-card-price-suffix">{{ plan.price_suffix }}</span>{% endif %}
+        </p>
+        <p class="access-card-subhead">{{ plan.subhead }}</p>
+
+        <button
+          type="button"
+          class="button button-secondary access-card-cta"
+          data-access-card-cta
+          data-label-default="{{ plan.cta_label }}"
+          data-label-selected="{{ controls.selected_label }}"
+          aria-controls="access-detail"
+          aria-pressed="{% if plan.key == default_plan %}true{% else %}false{% endif %}"
+        >{% if plan.key == default_plan %}{{ controls.selected_label }}{% else %}{{ plan.cta_label }}{% endif %}</button>
+
+        <ul class="access-card-features" aria-label="{{ plan.name }} kapsamı">
+          {% for feature in plan.features %}
+          <li>{{ feature }}</li>
+          {% endfor %}
+        </ul>
+      </article>
+      {% endfor %}
+    </div>
+
+    <!-- Compact secondary note: updates when a card is selected. -->
+    <article
+      id="access-detail"
+      class="access-detail"
+      data-access-detail
+      role="region"
+      aria-live="polite"
+      aria-labelledby="access-detail-title"
+    >
+      <header class="access-detail-head">
+        <span class="section-label" data-access-detail-eyebrow>{{ default_detail.eyebrow }}</span>
+        <h2 id="access-detail-title" data-access-detail-title>{{ default_detail.title }}</h2>
+      </header>
+
+      <p class="access-detail-body" data-access-detail-body>{{ default_detail.body }}</p>
+      <ul class="access-detail-points" data-access-detail-points>
+        {% for item in default_detail.points %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </article>
+
+    <footer class="access-next">
+      <span class="micro-label">{{ next_step.label }}</span>
+      <div class="access-next-actions">
+        {% for item in next_step["items"] %}
+        {% if item.kind == "primary" %}
+        <a class="button button-primary" href="{{ item.href }}">{{ item.label }}</a>
+        {% elif item.kind == "secondary" %}
+        <a class="button button-secondary" href="{{ item.href }}">{{ item.label }}</a>
+        {% else %}
+        <a class="button button-ghost" href="{{ item.href }}">{{ item.label }}</a>
+        {% endif %}
+        {% endfor %}
+      </div>
+      <p class="access-next-note">{{ next_step.note }}</p>
+    </footer>
+
+  </div>
+</section>
+
+<script type="application/json" data-access-plan-details>{{ details|tojson }}</script>
+<script type="application/json" data-access-plan-map>{{ tone_to_plan|tojson }}</script>
+{% endblock %}

@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section
+  class="section studio-section"
+  aria-labelledby="studio-heading"
+  data-studio
+  data-studio-phase="intro"
+>
+  <div class="container studio-stage reveal">
+
+    <!-- Phase rail (always visible, mirrors current phase) -->
+    <ol class="studio-rail" data-studio-rail aria-label="{{ controls.progress_label }}">
+      {% for phase in intro.phase_steps %}
+      <li
+        class="studio-rail-step{% if loop.first %} is-current{% endif %}"
+        data-rail-phase="{% if loop.index == 1 %}intro{% elif loop.index == 2 %}questions{% elif loop.index == 3 %}transition{% else %}result{% endif %}"
+      >
+        <span class="studio-rail-index">{{ phase.index }}</span>
+        <span class="studio-rail-label">{{ phase.label }}</span>
+      </li>
+      {% endfor %}
+    </ol>
+
+    <!-- ---------------- Phase: Intro ---------------- -->
+    <article
+      class="studio-phase studio-phase--intro"
+      data-phase="intro"
+      data-studio-initial-hidden="false"
+      aria-labelledby="studio-heading"
+    >
+      <span class="section-label">{{ intro.section_label }}</span>
+      <h1 class="studio-heading" id="studio-heading">{{ intro.title }}</h1>
+      <p class="studio-lede">{{ intro.body }}</p>
+      <p class="studio-transparency" id="studio-transparency">{{ intro.transparency_note }}</p>
+
+      <div class="studio-intro-cta">
+        <button
+          type="button"
+          class="button button-primary studio-start"
+          data-studio-start
+        >{{ intro.start_cta }}</button>
+        <p class="studio-intro-hint">{{ intro.start_hint }}</p>
+      </div>
+    </article>
+
+    <!-- ---------------- Phase: Questions ---------------- -->
+    <form
+      class="studio-phase studio-phase--questions"
+      data-phase="questions"
+      data-studio-initial-hidden="true"
+      data-studio-form
+      aria-describedby="studio-transparency"
+      onsubmit="return false;"
+    >
+      <header class="studio-questions-head">
+        <span class="section-label studio-progress-readout" data-progress-readout>
+          Adım <span data-progress-current>1</span> / {{ steps|length }}
+        </span>
+        <div class="studio-progress-bar" aria-hidden="true">
+          <span class="studio-progress-bar-fill" data-progress-fill></span>
+        </div>
+      </header>
+
+      {% for step in steps %}
+      <fieldset
+        class="studio-step{% if loop.index == 1 %} is-active{% endif %}"
+        data-studio-step="{{ step.index }}"
+        data-step-key="{{ step.key }}"
+        data-studio-step-initial-hidden="{% if loop.index != 1 %}true{% else %}false{% endif %}"
+      >
+        <legend class="studio-step-legend">
+          <span class="studio-step-eyebrow">{{ step.eyebrow }}</span>
+          <span class="studio-step-title">{{ step.title }}</span>
+        </legend>
+        <p class="studio-step-hint">{{ step.hint }}</p>
+        <div class="studio-options" role="radiogroup" aria-label="{{ step.title }}">
+          {% for option in step.options %}
+          {% set option_id = "studio-" ~ step.key ~ "-" ~ option.value %}
+          <label class="studio-chip" for="{{ option_id }}">
+            <input
+              type="radio"
+              id="{{ option_id }}"
+              name="studio-{{ step.key }}"
+              value="{{ option.value }}"
+              data-studio-input
+              {% if default_choice[step.key] == option.value %}checked{% endif %}
+            >
+            <span>{{ option.label }}</span>
+          </label>
+          {% endfor %}
+        </div>
+
+        <nav class="studio-step-controls" aria-label="Adım kontrolleri">
+          {% if loop.index == 1 %}
+          <button
+            type="button"
+            class="button button-secondary studio-back studio-back--to-intro"
+            data-studio-back-to-intro
+          >{{ controls.back_to_intro }}</button>
+          {% else %}
+          <button
+            type="button"
+            class="button button-secondary studio-back"
+            data-studio-back
+          >{{ controls.back }}</button>
+          {% endif %}
+          <button
+            type="button"
+            class="button button-primary studio-next"
+            data-studio-next
+          >
+            {% if loop.last %}{{ controls.reveal }}{% else %}{{ controls.next }}{% endif %}
+          </button>
+        </nav>
+      </fieldset>
+      {% endfor %}
+    </form>
+
+    <!-- ---------------- Phase: Transition ---------------- -->
+    <article
+      class="studio-phase studio-phase--transition"
+      data-phase="transition"
+      data-studio-initial-hidden="true"
+      role="status"
+      aria-live="polite"
+    >
+      <span class="section-label">{{ transition.eyebrow }}</span>
+      <h2 class="studio-transition-title">{{ transition.title }}</h2>
+      <ul class="studio-transition-list" data-transition-list>
+        {% for line in transition.messages %}
+        <li
+          class="studio-transition-item"
+          data-transition-step="{{ loop.index }}"
+        >
+          <span class="studio-transition-dot" aria-hidden="true"></span>
+          <span class="studio-transition-text">{{ line }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      <p class="studio-transition-fallback">{{ transition.fallback_note }}</p>
+    </article>
+
+    <!-- ---------------- Phase: Result ---------------- -->
+    <article
+      class="studio-phase studio-phase--result"
+      data-phase="result"
+      data-studio-initial-hidden="true"
+      data-studio-result
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+      aria-labelledby="studio-result-title"
+      tabindex="-1"
+    >
+      <header class="studio-result-head">
+        <span class="section-label">{{ result.eyebrow }}</span>
+        <p class="studio-result-meta">{{ result.title_label }}</p>
+        <h2 id="studio-result-title" data-studio-name>—</h2>
+        <p class="studio-result-summary-intro">{{ result.summary_intro }}.</p>
+        <p data-studio-summary>—</p>
+      </header>
+
+      <section class="studio-result-block" aria-labelledby="choices-label">
+        <span class="micro-label" id="choices-label">{{ result.choices_label }}</span>
+        <ul class="studio-choices" data-studio-choices></ul>
+      </section>
+
+      <section class="studio-result-block" aria-labelledby="layers-label">
+        <span class="micro-label" id="layers-label">{{ result.layers_label }}</span>
+        <div class="studio-layers" data-studio-layers></div>
+      </section>
+
+      <section class="studio-result-block" aria-labelledby="rationale-label">
+        <span class="micro-label" id="rationale-label">{{ result.rationale_label }}</span>
+        <p data-studio-rationale>—</p>
+      </section>
+
+      <p class="studio-caution">
+        <strong>{{ result.caution_label }}.</strong>
+        {{ result.caution_text }}
+      </p>
+
+      <footer class="studio-next">
+        <span class="micro-label">{{ next_step.label }}</span>
+        <div class="studio-next-actions">
+          {% for item in next_step["items"] %}
+          {% if item.kind == "primary" %}
+          <a class="button button-primary studio-next-primary" href="{{ item.href }}" data-studio-go-early-access>{{ item.label }}</a>
+          {% elif item.kind == "secondary" %}
+          <a class="button button-secondary" href="{{ item.href }}">{{ item.label }}</a>
+          {% else %}
+          <a class="button button-ghost" href="{{ item.href }}">{{ item.label }}</a>
+          {% endif %}
+          {% endfor %}
+        </div>
+        <p class="studio-next-note">{{ next_step.note }}</p>
+        <div class="studio-result-controls">
+          <button
+            type="button"
+            class="studio-link"
+            data-studio-edit
+          >{{ result.edit_label }}</button>
+          <button
+            type="button"
+            class="studio-link"
+            data-studio-restart
+          >{{ result.restart_label }}</button>
+        </div>
+      </footer>
+    </article>
+  </div>
+</section>
+{% endblock %}

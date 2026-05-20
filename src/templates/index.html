@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero section" id="hero">
+  <div class="container hero-grid">
+    <div class="hero-copy reveal">
+      <span class="section-label">Kişiselleştirilmiş ebeveyn desteği</span>
+      <h1>{{ hero.title }}</h1>
+      <p>{{ hero.body }}</p>
+      <div class="hero-actions" aria-label="Ana aksiyonlar">
+        <a class="button button-primary" href="{{ recommendation_path }}">{{ hero.primary_cta }}</a>
+        <a class="button button-secondary" href="#nasil-calisir">{{ hero.secondary_cta }}</a>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal" aria-label="Kişiselleştirilmiş kutu mantığı önizlemesi">
+      <div class="visual-shell">
+        <div class="visual-topline">
+          <span>Profil taslağı</span>
+          <strong>8. ay</strong>
+        </div>
+        <div class="profile-panel">
+          <div>
+            <span class="micro-label">Öncelik</span>
+            <strong>Tekrarlı temel ihtiyaç</strong>
+          </div>
+          <div>
+            <span class="micro-label">Not</span>
+            <strong>Koku hassasiyeti</strong>
+          </div>
+        </div>
+        <div class="box-preview" aria-hidden="true">
+          <span class="box-lid"></span>
+          <span class="box-body"></span>
+          <span class="box-card card-one"></span>
+          <span class="box-card card-two"></span>
+          <span class="box-card card-three"></span>
+        </div>
+        <div class="visual-list">
+          <span>Temel hijyen</span>
+          <span>Bakım ürünü fikri</span>
+          <span>İçerik hassasiyeti</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container proof-strip" aria-label="Babie+ odakları">
+    {% for proof in proofs %}
+    <span>{{ proof }}</span>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section problem-section" id="problemler" aria-labelledby="problemler-title">
+  <div class="container section-heading reveal">
+    <span class="section-label">Neden gerekli</span>
+    <h2 id="problemler-title">Ebeveynleri yoran şey sadece ürün almak değil; doğru ürünü tekrar tekrar seçmek.</h2>
+    <p>Babie+, kalabalık ürün listeleri ve dağınık bilgi akışı içinde daha net bir yol oluşturmayı hedefler.</p>
+  </div>
+  <div class="container problem-grid">
+    {% for problem in problems %}
+    <article class="care-card reveal">
+      <span class="card-index">0{{ loop.index }}</span>
+      <h3>{{ problem.title }}</h3>
+      <p>{{ problem.body }}</p>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section process-section" id="nasil-calisir" aria-labelledby="process-title">
+  <div class="container process-grid">
+    <div class="section-heading reveal">
+      <span class="section-label">Nasıl çalışır</span>
+      <h2 id="process-title">Karmaşık bir katalog yerine, daha yönlendirilmiş bir deneyim.</h2>
+      <p>Akış, bugünden tam otomasyon iddiası kurmadan kişiselleştirme mantığını sade şekilde anlatır.</p>
+    </div>
+    <div class="steps">
+      {% for step in steps %}
+      <article class="step-row reveal">
+        <span>{{ loop.index }}</span>
+        <div>
+          <h3>{{ step.title }}</h3>
+          <p>{{ step.body }}</p>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section box-section" id="kutu-mantigi" aria-labelledby="box-title">
+  <div class="container box-grid">
+    <div class="box-composition reveal" aria-hidden="true">
+      <div class="package-face">
+        <img
+          class="package-logo"
+          src="{{ asset_prefix }}/brand/babie-plus-mark-on-light.png"
+          alt=""
+          width="251"
+          height="256"
+          decoding="async"
+        >
+        <span class="package-line"></span>
+        <span class="package-line short"></span>
+      </div>
+      <div class="package-note note-one">0-24 ay odağı</div>
+      <div class="package-note note-two">Hassasiyet notu</div>
+    </div>
+    <div class="box-copy reveal">
+      <span class="section-label">Örnek deneyim</span>
+      <h2 id="box-title">{{ box.title }}</h2>
+      <p>{{ box.body }}</p>
+      <div class="box-items">
+        {% for item in box["items"] %}
+        <article>
+          <h3>{{ item.label }}</h3>
+          <p>{{ item.text }}</p>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section trust-section" id="guven" aria-labelledby="trust-title">
+  <div class="container trust-grid">
+    <div class="section-heading reveal">
+      <span class="section-label">Güven katmanı</span>
+      <h2 id="trust-title">Babie+, seçimi sadece daha kolay değil, daha açık hale getirmeyi hedefler.</h2>
+    </div>
+    <div class="trust-list">
+      {% for item in trust %}
+      <article class="trust-item reveal">
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.body }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section experience-section" aria-labelledby="experience-title">
+  <div class="container experience-panel reveal">
+    <h2 id="experience-title">Hedeflenen ebeveyn deneyimi</h2>
+    <div>
+      {% for item in experience %}
+      <span>{{ item }}</span>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section faq-section" id="sss" aria-labelledby="faq-title">
+  <div class="container faq-grid">
+    <div class="section-heading reveal">
+      <span class="section-label">SSS</span>
+      <h2 id="faq-title">Sık sorulan sorular</h2>
+      <p>Bu alan, Babie+’ın bugün ne sunduğunu ve neyi henüz sunmadığını açık tutar.</p>
+    </div>
+    <div class="faq-list">
+      {% for faq in faqs %}
+      <details class="faq-item reveal">
+        <summary>{{ faq.question }}</summary>
+        <p>{{ faq.answer }}</p>
+      </details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section contact-section" id="iletisim" aria-labelledby="contact-title">
+  <div class="container contact-panel reveal">
+    <div class="contact-copy">
+      <span class="section-label contact-eyebrow">
+        <span class="contact-eyebrow-icon" aria-hidden="true">
+          <svg viewBox="0 0 16 16" focusable="false" aria-hidden="true">
+            <path d="M3 4.4h10v6.2H8.4L5 13.2v-2.6H3z"></path>
+          </svg>
+        </span>
+        <span>{{ contact.section_label }}</span>
+      </span>
+      <h2 id="contact-title">{{ contact.title }}</h2>
+      <p class="contact-lede">{{ contact.body }}</p>
+      <p class="contact-note">{{ contact.note }}</p>
+    </div>
+    <div class="contact-channels" aria-label="İletişim kanalları">
+      {% for channel in contact.channels %}
+      <a
+        class="contact-card contact-card--{{ channel.kind }}"
+        href="{{ channel.href }}"
+        {% if channel.kind == "instagram" %}target="_blank" rel="noopener noreferrer"{% endif %}
+      >
+        <span class="contact-icon" aria-hidden="true">
+          {% if channel.kind == "instagram" %}
+          <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+            <rect x="4" y="4" width="16" height="16" rx="5"></rect>
+            <circle cx="12" cy="12" r="3.6"></circle>
+            <circle cx="17.1" cy="6.9" r="1"></circle>
+          </svg>
+          {% else %}
+          <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+            <rect x="3.8" y="5.5" width="16.4" height="13" rx="3"></rect>
+            <path d="M5.6 8.4 12 13l6.4-4.6"></path>
+          </svg>
+          {% endif %}
+        </span>
+        <span class="contact-card-copy">
+          <span class="contact-card-label">{{ channel.label }}</span>
+          <strong>{{ channel.text }}</strong>
+          <span class="contact-card-note">{{ channel.note }}</span>
+        </span>
+        <span class="contact-card-arrow" aria-hidden="true">
+          <svg viewBox="0 0 16 16" focusable="false" aria-hidden="true">
+            <path d="M5 3l5 5-5 5"></path>
+          </svg>
+        </span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
